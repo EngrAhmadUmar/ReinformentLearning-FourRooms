@@ -9,12 +9,14 @@ fourRoomsObj = FourRooms('simple', stochastic=True)
 # Initialize Q-values arbitrarily
 Q = np.zeros((13, 13, 4))
 
-#Initializing learning rate, discount factor and exploration rate
+# Initializing learning rate, discount factor and exploration rate
+
 # learning rate
 alpha = 0.1  
 # discount factor
 gamma = 0.9  
-epsilon = 0.1  # exploration rate
+# exploration rate
+epsilon = 0.1  
 
 num_episodes = 1000
 for episode in range(num_episodes):
@@ -31,7 +33,8 @@ for episode in range(num_episodes):
             #Selecting a Random Action
             action = random.randint(0, 3)  
         else:
-            action = np.argmax(Q[state[1], state[0]])  # adjust indices
+            # adjust indices
+            action = np.argmax(Q[state[1], state[0]])  
         print("Chosen action:", action)
 
         # Take action and observe reward and next state
@@ -44,7 +47,8 @@ for episode in range(num_episodes):
         # adjust indices
         max_future_Q = np.max(Q[new_state[1], new_state[0]])  
         new_Q = old_Q + alpha * (grid_cell + gamma * max_future_Q - old_Q)
-        Q[state[1], state[0], action] = new_Q  # adjust indices
+         # adjust indices
+        Q[state[1], state[0], action] = new_Q 
 
         state = new_state
 

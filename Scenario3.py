@@ -2,16 +2,14 @@ import numpy as np
 import random
 from FourRooms import FourRooms
 
-fourRoomsObj = FourRooms('rgb')
+fourRoomsObj = FourRooms('rgb', stochastic=True)
 
-# Define Q-table
-# Initialize Q-values arbitrarily
 Q = np.zeros((13, 13, 4))
 
-# Define hyperparameters
-alpha = 0.1  # learning rate
-gamma = 0.9  # discount factor
-epsilon = 0.1  # exploration rate
+# Defining hyperparameters
+alpha = 0.1 
+gamma = 0.7
+epsilon = 0.1 
 
 # Training loop
 num_episodes = 1000  # adjust as needed
@@ -28,9 +26,9 @@ for episode in range(num_episodes):
 
         # Choose action using epsilon-greedy policy
         if random.uniform(0, 1) < epsilon:
-            action = random.randint(0, 3)  # choose random action
+            action = random.randint(0, 3)  
         else:
-            action = np.argmax(Q[state[1], state[0]])  # adjust indices
+            action = np.argmax(Q[state[1], state[0]])  
 
         # Print chosen action
         print("Chosen Action:", action)
@@ -51,15 +49,14 @@ for episode in range(num_episodes):
                 break
 
         # Update Q-value using Q-learning update rule
-        old_Q = Q[state[1], state[0], action]  # adjust indices
-        max_future_Q = np.max(Q[new_state[1], new_state[0]])  # adjust indices
+        old_Q = Q[state[1], state[0], action]  
+        max_future_Q = np.max(Q[new_state[1], new_state[0]])  
         new_Q = old_Q + alpha * (grid_cell + gamma * max_future_Q - old_Q)
-        Q[state[1], state[0], action] = new_Q  # adjust indices
+        Q[state[1], state[0], action] = new_Q 
 
         state = new_state
 
     if packages_remaining == 0:
         print("All packages collected successfully!")
 
-# Show final path
 fourRoomsObj.showPath(-1)
